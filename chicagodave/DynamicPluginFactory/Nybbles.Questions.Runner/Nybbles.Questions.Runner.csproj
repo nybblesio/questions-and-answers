@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Nybbles.Questions.NonContainerFactory\Nybbles.Questions.NonContainerFactory.csproj">
+      <Project>{AED9C608-7173-4B40-871D-9D88AF80FC0F}</Project>
+      <Name>Nybbles.Questions.NonContainerFactory</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

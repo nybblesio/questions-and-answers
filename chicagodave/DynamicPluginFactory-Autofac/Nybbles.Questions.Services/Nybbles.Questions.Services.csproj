@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Nybbles.Questions.Contracts\Nybbles.Questions.Contracts.csproj">
+      <Project>{CD13455A-F1AB-4124-88B7-FB1377B00D6D}</Project>
+      <Name>Nybbles.Questions.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nybbles.Questions.Plugins1\Nybbles.Questions.Plugins1.csproj" />
+    <ProjectReference Include="..\Nybbles.Questions.Plugins2\Nybbles.Questions.Plugins2.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.6.2" />
+  </ItemGroup>
+</Project>

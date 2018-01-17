@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Nybbles.Questions.Contracts\Nybbles.Questions.Contracts.csproj">
+      <Project>{CD13455A-F1AB-4124-88B7-FB1377B00D6D}</Project>
+      <Name>Nybbles.Questions.Contracts</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
