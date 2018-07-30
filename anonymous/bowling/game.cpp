@@ -2,7 +2,6 @@
 #include "game.h"
 #include "player.h"
 
-//player: jeff 9 15 22 29 31 51 81 111 141 171
 uint16_t game::score(uint8_t frame) {
     auto p = current_player();
     if (p == nullptr)
@@ -16,24 +15,33 @@ uint16_t game::score(uint8_t frame) {
             break;
         score += frame_ptr->score(frame_number, score_type_t::normal);
         if (frame_ptr->is_strike()) {
-            auto first_next_frame_score = score_for_player_frame(
+            score_result_t first_score_result {};
+            score_for_player_frame(
                 p,
+                first_score_result,
                 frame_number,
                 static_cast<uint8_t>(frame_number + 1),
                 score_type_t::strike);
-            auto second_next_frame_score = score_for_player_frame(
-                p,
-                frame_number,
-                static_cast<uint8_t>(frame_number + 2),
-                score_type_t::strike);
-            score += first_next_frame_score;
-            score += second_next_frame_score;
+            score += first_score_result.score;
+            if (first_score_result.strike) {
+                score_result_t second_score_result {};
+                score_for_player_frame(
+                    p,
+                    second_score_result,
+                    frame_number,
+                    static_cast<uint8_t>(frame_number + 2),
+                    score_type_t::strike);
+                score += second_score_result.score;
+            }
         } else if (frame_ptr->is_spare()) {
-            score += score_for_player_frame(
+            score_result_t score_result {};
+            score_for_player_frame(
                 p,
+                score_result,
                 frame_number,
                 static_cast<uint8_t>(frame_number + 1),
                 score_type_t::spare);
+            score += score_result.score;
         }
     }
     return score;
@@ -96,15 +104,18 @@ frame* game::frame_for_player(player* p, uint8_t number) {
     return nullptr;
 }
 
-uint16_t game::score_for_player_frame(
+void game::score_for_player_frame(
         player* p,
+        score_result_t& result,
         uint8_t scoring_for_frame,
         uint8_t target_frame,
         score_type_t score_type) {
     auto next_frame = frame_for_player(p, target_frame);
-    if (next_frame != nullptr)
-        return next_frame->score(scoring_for_frame, score_type);
-    return 0;
+    if (next_frame != nullptr) {
+        result.spare = next_frame->is_spare();
+        result.strike = next_frame->is_strike();
+        result.score = next_frame->score(scoring_for_frame, score_type);
+    }
 }
 
 void game::on_frame_changed(const frame_changed_callable& callable) {

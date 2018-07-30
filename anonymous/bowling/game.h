@@ -5,6 +5,12 @@
 #include <functional>
 #include "frame.h"
 
+struct score_result_t {
+    bool strike = false;
+    bool spare = false;
+    uint16_t score = 0;
+};
+
 class player;
 
 using player_list_t = std::vector<player*>;
@@ -29,8 +35,9 @@ public:
     void on_frame_changed(const frame_changed_callable& callable);
 
 private:
-    uint16_t score_for_player_frame(
+    void score_for_player_frame(
         player* p,
+        score_result_t& result,
         uint8_t scoring_for_frame,
         uint8_t target_frame,
         score_type_t score_type = score_type_t::normal);

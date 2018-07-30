@@ -27,16 +27,20 @@ uint16_t frame::score(
                 case score_type_t::normal:
                 case score_type_t::spare:
                     return first_roll.pins();
-                case score_type_t::strike:
-                    return first_roll.pins() + second_roll.pins();
+                case score_type_t::strike: {
+                    if (scoring_for_frame == 8) {
+                        return first_roll.pins() + second_roll.pins();
+                    } else {
+                        return first_roll.pins();
+                    }
+                }
             }
         }
 
-        if (first_roll.is_all_pins()) {
+        if (is_strike() || is_spare()) {
             return first_roll.pins() + second_roll.pins() + third_roll.pins();
         } else {
-            auto pins = first_roll.pins() + second_roll.pins();
-            return pins;
+            return first_roll.pins() + second_roll.pins();
         }
     } else {
         switch (score_type) {
